@@ -61,6 +61,7 @@ void insert_at_head(linked_list_t* list, int value){
     }
     node->value = value;
     node->next = list->head;
+    list->head->prev = node;
     list->head = node;
     list->size++;
 }
@@ -77,7 +78,10 @@ void insert_at_any_point(linked_list_t* list, int value, int prev){
             current = current->next;
         }
 
+
         node->next = current->next;
+        current->next->prev = node;
+        node->prev = current;
         current->next = node;
     }
 
@@ -86,6 +90,9 @@ void insert_at_any_point(linked_list_t* list, int value, int prev){
 
 void insert(linked_list_t* list, int value){
     node_t* node = (node_t *)calloc(1, sizeof(node_t));
+    
+    node->next = NULL;
+    node->prev = NULL;    
     
     if(is_empty(list)){
 
@@ -96,15 +103,15 @@ void insert(linked_list_t* list, int value){
     if(node == NULL){
         exit(1);
     }
-    
-    node->next = NULL;
+
     node->value = value;
     list->tail->next = node;
+    node->prev = list->tail;
     list->tail = node;
     list->size++;
 }
 
-void root_node(linked_list_t* ll, int value){
+void root_node(linked_list_t* list, int value){
 
         node_t* root = (node_t *)calloc(1, sizeof(node_t));
         
@@ -112,12 +119,12 @@ void root_node(linked_list_t* ll, int value){
             exit(1);
         }
 
-        ll->head = root;
-        ll->tail = root;
+        list->head = root;
+        list->tail = root;
         root->next = NULL;
         root->prev = NULL;
         root->value = value;
-        ll->size++;       
+        list->size++;       
 }
 
 void remove_node(linked_list_t* list, int value){
@@ -147,9 +154,9 @@ void remove_node(linked_list_t* list, int value){
     }
 }
 
-bool is_empty(const linked_list_t* ll){
+bool is_empty(const linked_list_t* list){
 
-    if(ll->head == NULL && ll->tail == NULL){
+    if(list->head == NULL && list->tail == NULL){
         return true;
     }
 
