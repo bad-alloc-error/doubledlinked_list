@@ -16,6 +16,7 @@ void insert_at_any_point(linked_list_t* list, int value, int prev);
 node_t* head_node(const linked_list_t* list);
 node_t* tail_node(const linked_list_t* list);
 void remove_node(linked_list_t* list, int value);
+void remove_last(linked_list_t* list);
 void destroy_list(linked_list_t** list);
 
 #endif
