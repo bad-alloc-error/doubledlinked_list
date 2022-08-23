@@ -130,23 +130,42 @@ void root_node(linked_list_t* list, int value){
 void remove_node(linked_list_t* list, int value){
     node_t* deleted_node = NULL;
 
+    if(list->size == 1 && list->head->value == value){
+        
+        list->head = NULL;
+        list->tail = NULL;
+        printf("Valor ** %d ** encontrado...deletando.\n", value);
+        free(list->head);
+        list->size--;
+        return;    
+    }
+
     if(is_empty(list) == false){
         if(list->head->value == value){
             deleted_node = list->head;
             list->head = deleted_node->next;
+            deleted_node->next->prev = NULL;
             free(deleted_node);
             list->size--;
         }else{
-           
+            
+            printf("caiu no else\n");
             node_t* current = list->head->next;
-           
-            while(current && current->next->value != value){
+            printf("antes while\n");
+            while(current && current->value != value){
+                printf("current: %p valor: %d\n", current, current->value);
                 current = current->next;
             }
-
+            printf("depois while\n");
+            printf("current: %p valor: %d\n", current, current->value);
+            deleted_node =  current;
+            printf("deleted_node: %p valor: %d\n", deleted_node, deleted_node->value);
+            
+            /*corrige os ponteiros caso há um nó depois no nó a ser removido*/
+            printf("if(current->next)\n");
             if(current->next){
-                deleted_node = current->next;
-                current->next = deleted_node->next;
+                current->prev->next = current->next;
+                current->next->prev = current->prev;
                 free(deleted_node);
                 list->size--;
             }
@@ -175,6 +194,11 @@ void print(const linked_list_t* ll){
 
     int size = ll->size;
     node_t* current = ll->head;
+
+    if(ll->size == 0){
+        printf("Lista Vazia!\n");
+        return;
+    }
 
     printf("INICIO -> "); 
     while(current != NULL){
