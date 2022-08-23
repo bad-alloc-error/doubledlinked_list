@@ -127,17 +127,40 @@ void root_node(linked_list_t* list, int value){
         list->size++;       
 }
 
+void remove_last(linked_list_t* list){
+
+    if(is_empty(list)){
+        fprintf(stderr, "Lista vazia!\n");
+        exit(-1);
+    }
+
+    node_t* last = list->tail;
+    last->prev->next = NULL;
+    list->tail = last->prev;
+    list->size--;
+    free(last);
+}
+
 void remove_node(linked_list_t* list, int value){
     node_t* deleted_node = NULL;
 
     if(list->size == 1 && list->head->value == value){
-        
+        node_t* h = list->head;
         list->head = NULL;
         list->tail = NULL;
         printf("Valor ** %d ** encontrado...deletando.\n", value);
-        free(list->head);
+        free(h);
         list->size--;
         return;    
+    }
+
+    if(list->tail->value == value){
+        node_t* t = list->tail;
+        list->tail->prev->next = NULL;
+        list->tail = list->tail->prev;
+        free(t);
+        list->size--;
+        return;
     }
 
     if(is_empty(list) == false){
@@ -149,20 +172,13 @@ void remove_node(linked_list_t* list, int value){
             list->size--;
         }else{
             
-            printf("caiu no else\n");
             node_t* current = list->head->next;
-            printf("antes while\n");
             while(current && current->value != value){
-                printf("current: %p valor: %d\n", current, current->value);
                 current = current->next;
             }
-            printf("depois while\n");
-            printf("current: %p valor: %d\n", current, current->value);
-            deleted_node =  current;
-            printf("deleted_node: %p valor: %d\n", deleted_node, deleted_node->value);
-            
+
+            deleted_node =  current;            
             /*corrige os ponteiros caso há um nó depois no nó a ser removido*/
-            printf("if(current->next)\n");
             if(current->next){
                 current->prev->next = current->next;
                 current->next->prev = current->prev;
