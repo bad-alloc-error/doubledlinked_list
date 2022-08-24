@@ -4,19 +4,19 @@
 int main(){
 
     linked_list_t* ll = init();
-    insert(ll, 638);
-    insert(ll, 250);
-    insert(ll, 1000);
-    insert(ll, 475);
-    insert(ll, 600);
-    insert(ll, 4535);
-    insert(ll, 344);
-    insert(ll, 1);
-    // insert_at_any_point(ll, 636, 250);
-    print(ll);
-    remove_node(ll,638);
-    remove_last(ll);
-    print(ll);
+    // insert(ll, 638);
+    // insert(ll, 250);
+    // insert(ll, 1000);
+    // insert(ll, 475);
+    // insert(ll, 600);
+    // insert(ll, 4535);
+    // insert(ll, 344);
+    // insert(ll, 1);
+    // // insert_at_any_point(ll, 636, 250);
+    // print(ll);
+    // remove_node(ll,638);
+    // remove_last(ll);
+    // print(ll);
     // remove_node(ll, 344);
     // print(ll);
     // remove_node(ll, 1);
@@ -25,5 +25,17 @@ int main(){
     // free(removido4);
     // print(ll);
 
+    ordered_insert(ll, 158);
+    ordered_insert(ll, 1);
+    ordered_insert(ll, 68);
+    ordered_insert(ll, 743);
+    ordered_insert(ll, 12879);
+    print(ll);
+    remove_last(ll);
+    print(ll);
+    remove_node(ll, 743);
+    print(ll);
+    remove_node(ll, 1);
+    print(ll);
 
 }

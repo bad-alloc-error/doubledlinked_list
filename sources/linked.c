@@ -47,6 +47,13 @@ void ordered_insert(linked_list_t* list, int value){
         current->next = node;
         list->size++;
     }  
+
+    if(node->value > list->tail->value){
+        node->prev = list->tail;
+        list->tail->next = node;
+        list->tail = node;
+        return;
+    }
 }
 
 void insert_at_head(linked_list_t* list, int value){
